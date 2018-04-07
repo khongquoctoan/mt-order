@@ -1,35 +1,29 @@
-<ion-header>
-    <ion-navbar>
-        <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-        <ion-title>Login</ion-title>
-    </ion-navbar>
-</ion-header>
-
 <ion-content>
-    <ion-list>
-        <div style="padding: 10px 5px 0px;font-weight: bold;color: red;text-align: center;">Style "floating"</div>
-        <ion-item>
-            <ion-label floating>Username</ion-label>
-            <ion-input type="text"></ion-input>
-        </ion-item>
+    <form #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off">
+        <div style="text-align:center;font-size: 40px;margin: 100px 10px 50px;font-weight: bold;color: #2196F3;">
+            LOGIN
+        </div>
+        <!-- <ion-row>
+            <ion-col> -->
 
-        <ion-item>
-            <ion-label floating>Password</ion-label>
-            <ion-input type="password"></ion-input>
-        </ion-item>
-
-        <div style="padding: 35px 5px 0px;font-weight: bold;color: red;text-align: center;">Style "Placeholder"</div>
-        <ion-item>
-            <ion-input type="text" placeholder="Username"></ion-input>
-        </ion-item>
-
-        <ion-item>
-            <ion-input type="password" placeholder="Password"></ion-input>
-        </ion-item>
-    </ion-list>
-    <div padding>
-        <button ion-button block (click)="showConfirm()">Sign In</button>
-    </div>
+        <ion-list>
+            <ion-item>
+                <ion-label floating>Email</ion-label>
+                <ion-input name="username" id="loginField" type="text" required [(ngModel)]="username" #email></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Password</ion-label>
+                <ion-input name="password" id="passwordField" type="password" required [(ngModel)]="password"></ion-input>
+            </ion-item>
+        </ion-list>
+        <!-- </ion-col>
+        </ion-row> -->
+        <ion-row>
+            <ion-col>
+                <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+                <button ion-button class="submit-btn" block type="submit" [disabled]="!loginForm.form.valid">Login
+              </button>
+            </ion-col>
+        </ion-row>
+    </form>
 </ion-content>
