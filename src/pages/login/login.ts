@@ -28,7 +28,7 @@ export class LoginPage {
         // }
         
         this.username = 'khongtoan.71@gmail.com';
-        this.password = '123';
+        // this.password = '123';
         this.error = '';
     }
 

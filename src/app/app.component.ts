@@ -1,6 +1,6 @@
 import { PermissionService } from './../common/permission.service';
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, Events } from 'ionic-angular';
+import { Nav, Platform, Events, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
@@ -14,20 +14,25 @@ import { LoginPage } from './../pages/login/login';
 })
 export class MyApp {
     @ViewChild(Nav) nav: Nav;
-
+    isLogin : boolean = false;
     rootPage: any = LoginPage;
 
     pages: Array<{ title: string, component: any }>;
 
     constructor(
         public platform: Platform, public statusBar: StatusBar,
+        public menuCtrl: MenuController,
         public splashScreen: SplashScreen, private storage: Storage,
         public events: Events,public permission: PermissionService) {
-        this.initializeApp();
         
+            this.initializeApp();
+        this.menuCtrl.enable(false, 'myMenu');
+
         this.events.subscribe('user:login', () => {
             console.log('listen event: Login');
-            this.rootPage = HomePage;
+            this.isLogin = true;
+            this.rootPage = HomePage; 
+            this.menuCtrl.enable(true, 'myMenu');
             // used for an example of ngFor and navigation
             this.pages = [
                 { title: 'Home', component: HomePage },
@@ -37,7 +42,9 @@ export class MyApp {
 
         this.events.subscribe('user:logout', () => {
             console.log('listen event: Logout');
+            this.isLogin = false;
             this.rootPage = LoginPage;
+            this.menuCtrl.enable(false, 'myMenu');
         });
     }
 

@@ -1,7 +1,7 @@
 <ion-content>
     <form #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off">
         <div style="text-align:center;font-size: 40px;margin: 100px 10px 50px;font-weight: bold;color: #2196F3;">
-            LOGIN
+            Đăng nhập
         </div>
         <!-- <ion-row>
             <ion-col> -->
@@ -9,7 +9,7 @@
         <ion-list>
             <ion-item>
                 <ion-label floating>Email</ion-label>
-                <ion-input name="username" id="loginField" type="text" required [(ngModel)]="username" #email></ion-input>
+                <ion-input name="username" id="loginField" type="email" required [(ngModel)]="username" #email></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>Password</ion-label>
@@ -19,10 +19,9 @@
         <!-- </ion-col>
         </ion-row> -->
         <ion-row>
-            <ion-col>
+            <ion-col padding>
                 <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-                <button ion-button class="submit-btn" block type="submit" [disabled]="!loginForm.form.valid">Login
-              </button>
+                <button ion-button class="submit-btn" block type="submit" [disabled]="!loginForm.form.valid">Đăng nhập</button>
             </ion-col>
         </ion-row>
     </form>
