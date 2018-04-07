@@ -1,0 +1,8 @@
+{
+  "name": "mt-order",
+  "app_id": "46da5024",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
