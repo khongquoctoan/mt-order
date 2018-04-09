@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { SettingService } from './../common/setting.service';
+// import { Http, Response, Headers, RequestOptions } from '@angular/http';
+// import { SettingService } from './../common/setting.service';
 import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class PermissionService {
-    constructor(private _settingService: SettingService, private storage: Storage) {
+    constructor(
+        // private _settingService: SettingService, 
+        private storage: Storage) {
 
     }
 

@@ -13,6 +13,7 @@ import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Contacts } from '@ionic-native/contacts';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     providers: [
         StatusBar,
         SplashScreen,
+        Contacts,
         SettingService,
         PermissionService,
         { provide: ErrorHandler, useClass: IonicErrorHandler }
