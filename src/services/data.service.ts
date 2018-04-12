@@ -17,8 +17,7 @@ import 'rxjs/add/operator/mergeMap';
 export class DataService {
 
     // Base Url for API
-    private baseUrl: string = (location.hostname === "localhost") ? 
-    'http://localhost:8000/api/v1/' : 'http://api.maxtot.com/api/v1/';
+    private baseUrl: string = 'http://api.maxtot.com/api/v1/';//(location.hostname === "localhost") ? 'http://localhost:8000/api/v1/' : 'http://api.maxtot.com/api/v1/';
 
     private curUserSessionName = 'curuser';
     private curUserTokenname = 'token';
