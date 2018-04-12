@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-// import { PermissionService } from './../../common/permission.service';
-import { HomePage } from './../home/home';
+// import { HomePage } from './../home/home';
+import { DataService } from '../../services/data.service';
 
 @Component({
     selector: 'page-login',
@@ -12,17 +12,15 @@ export class LoginPage {
     @ViewChild('email') email: any;
     private username: string;
     private password: string;
-    private error: string;
-
+    isProcess:boolean = false;
     constructor(
-        public navCtrl: NavController,
-        public navParams: NavParams,
-        // public permission: PermissionService,
-        public events: Events,
-        private storage: Storage) {
-        this.username = 'khongtoan.71@gmail.com';
-        // this.password = '123';
-        this.error = '';
+        public _navCtrl: NavController,
+        public _navParams: NavParams,
+        public _events: Events,
+        private _storage: Storage,
+        private _dataService: DataService) {
+        this.username = 'admin@maxtot.com';
+        this.password = 'secret';
     }
 
     ionViewDidLoad() {
@@ -34,51 +32,29 @@ export class LoginPage {
     login(): void {
         // set a key/value
         let params = {
-            username: this.username,
+            email: this.username,
             password: this.password
         };
-
-        this.storage.set('access_token', params);
-        this.events.publish('user:login');
-        this.navCtrl.setRoot(HomePage);
-        // this.navCtrl.setRoot(this.navCtrl.getActive().component);
-
-        // Or to get a key/value pair
-        // this.storage.get('age').then((val) => {
-        //     console.log('Your age is', val);
-        // });
-        /*this.oauthService.createAndSaveNonce().then(nonce => {
-            const authClient = new OktaAuth({
-                clientId: this.oauthService.clientId,
-                redirectUri: this.oauthService.redirectUri,
-                url: 'https://dev-[dev-id].oktapreview.com',
-                issuer: this.oauthService.issuer
-            });
-            return authClient.signIn({
-                username: this.username,
-                password: this.password
-            }).then((response) => {
-                if (response.status === 'SUCCESS') {
-                    return authClient.token.getWithoutPrompt({
-                        nonce: nonce,
-                        responseType: ['id_token', 'token'],
-                        sessionToken: response.sessionToken,
-                        scopes: this.oauthService.scope.split(' ')
-                    })
-                        .then((tokens) => {
-                            // oauthService.processIdToken doesn't set an access token
-                            // set it manually so oauthService.authorizationHeader() works
-                            localStorage.setItem('access_token', tokens[1].accessToken);
-                            this.oauthService.processIdToken(tokens[0].idToken, tokens[1].accessToken);
-                            this.navCtrl.push(TabsPage);
-                        });
-                } else {
-                    throw new Error('We cannot handle the ' + response.status + ' status');
+        this.isProcess = true;
+        this._dataService.withLoader('Đợi xíu nhé :)');
+        this._dataService.post('login', params).subscribe(
+            res => {
+                // console.log('login response: ', res);
+                if(res.success == true){
+                    this._storage.set('curuser', res.data);
+                    this._events.publish('user:login');
+                    // setTimeout(() => {  //Chuyen huong nhanh se bi loi - popup loading
+                        // this._navCtrl.setRoot(HomePage);
+                    // }, 500);
+                }else{
+                    this._dataService.showAlert('Thông báo', res.error);
                 }
-            }).fail((error) => {
-                console.error(error);
-                this.error = error.message;
-            });
-        });*/
+                this.isProcess = false;
+            },
+            err => {
+                console.log('err: ', err);
+                this.isProcess = false;
+            }
+        );
     }
 }

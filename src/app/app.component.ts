@@ -14,7 +14,7 @@ import { LoginPage } from './../pages/login/login';
 })
 export class MyApp {
     @ViewChild(Nav) nav: Nav;
-    isLogin : boolean = false;
+    isLogin: boolean = false;
     rootPage: any = LoginPage;
 
     pages: Array<{ title: string, component: any }>;
@@ -23,15 +23,15 @@ export class MyApp {
         public platform: Platform, public statusBar: StatusBar,
         public menuCtrl: MenuController,
         public splashScreen: SplashScreen, private storage: Storage,
-        public events: Events,public permission: PermissionService) {
-        
-            this.initializeApp();
+        public events: Events, public permission: PermissionService) {
+
+        this.initializeApp();
         this.menuCtrl.enable(false, 'myMenu');
 
         this.events.subscribe('user:login', () => {
             console.log('listen event: Login');
             this.isLogin = true;
-            this.rootPage = HomePage; 
+            this.rootPage = HomePage;
             this.menuCtrl.enable(true, 'myMenu');
             // used for an example of ngFor and navigation
             this.pages = [
@@ -57,7 +57,7 @@ export class MyApp {
         });
     }
 
-    userLogout(){
+    userLogout() {
         this.storage.clear();
         this.events.publish('user:logout');
     }
@@ -65,6 +65,6 @@ export class MyApp {
     openPage(page) {
         // Reset the content nav to have just this page
         // we wouldn't want the back button to show in this scenario
-        this.nav.push(page.component); 
+        this.nav.push(page.component);
     }
 }

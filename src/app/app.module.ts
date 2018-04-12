@@ -5,6 +5,7 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { SettingService } from '../common/setting.service';
 import { PermissionService } from './../common/permission.service';
+import { DataService } from './../services/data.service';
 
 import { MyApp } from './app.component';
 import { LoginPage } from './../pages/login/login';
@@ -14,6 +15,9 @@ import { ListPage } from '../pages/list/list';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Contacts } from '@ionic-native/contacts';
+import { HttpModule } from '@angular/http';
+import { Network } from '@ionic-native/network';
+import { CurrencyVndPipe } from '../pipes/currency-vnd.pipe';
 
 
 @NgModule({
@@ -22,8 +26,10 @@ import { Contacts } from '@ionic-native/contacts';
         HomePage,
         ListPage,
         LoginPage,
+        CurrencyVndPipe
     ],
     imports: [
+        HttpModule,
         BrowserModule,
         IonicModule.forRoot(MyApp),
         IonicStorageModule.forRoot()
@@ -41,6 +47,8 @@ import { Contacts } from '@ionic-native/contacts';
         Contacts,
         SettingService,
         PermissionService,
+        DataService,
+        Network,
         { provide: ErrorHandler, useClass: IonicErrorHandler }
     ]
 })

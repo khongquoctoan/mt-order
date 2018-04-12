@@ -8,21 +8,20 @@
 </ion-header>
 
 <ion-content padding>
-    <h3>Welcome to my app!</h3>
-    <button ion-button class="submit-btn" block (click)="addContact()">Add contact</button>
+    <!-- <button ion-button class="submit-btn" block (click)="addContact()">Add contact</button> -->
     <div padding>
-        <ion-segment [(ngModel)]="pet">
-            <ion-segment-button value="kittens">
-                Kittens
+        <ion-segment [(ngModel)]="productGroup">
+            <ion-segment-button value="newest">
+                Mới nhất
             </ion-segment-button>
-            <ion-segment-button value="puppies">
-                Puppies
+            <ion-segment-button value="bestseller">
+                Bán chạy
             </ion-segment-button>
         </ion-segment>
     </div>
 
-    <div [ngSwitch]="pet">
-        <ion-list *ngSwitchCase="'puppies'">
+    <div [ngSwitch]="productGroup">
+        <ion-list *ngSwitchCase="'bestseller'">
             <ion-item *ngFor="let item of items">
                 <ion-thumbnail item-start>
                     <img src="assets/imgs/{{item.img}}">
@@ -32,12 +31,15 @@
 
         </ion-list>
 
-        <ion-list *ngSwitchCase="'kittens'">
-            <ion-item *ngFor="let item of items">
+        <ion-list *ngSwitchCase="'newest'">
+            <ion-item *ngFor="let item of dataHome.newest">
                 <ion-thumbnail item-start>
-                    <img src="assets/imgs/{{item.img}}">
+                    <img src="assets/imgs/{{item.pro_pictures}}" (error)="item.pro_pictures='img_1.jpg'">
                 </ion-thumbnail>
-                <h2>{{item.title}}</h2>
+                <h2>{{item.pro_name}}</h2>
+                <p>{{item.pro_code}}
+                    <small style="float:right">{{item.pro_price | currencyVnd}} VND</small>
+                </p>
             </ion-item>
         </ion-list>
     </div>

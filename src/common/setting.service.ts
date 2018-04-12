@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class SettingService {
     public socketConn: any = null;
-    public _baseUrl = "https://api-popupcontact-02.mipbx.vn:5443/public/";
-    public _baseAPIUrl = "https://api-popupcontact-02.mipbx.vn:5443/api/v1/";
-    public _baseAPIUrlDev = "https://api-popupcontact-02.mipbx.vn:5443/api/dev/";
-
+    public _baseUrl = (location.hostname === "localhost") ? 'http://localhost:8000/public/' : 'http://api.maxtot.com/public/';
+    public _baseAPIUrl = (location.hostname === "localhost") ? 'http://localhost:8000/api/v1/' : 'http://api.maxtot.com/api/v1/';
+    public _baseAPIUrlDev = (location.hostname === "localhost") ? 'http://localhost:8000/api/dev/' : 'http://api.maxtot.com/api/dev/';
+    
     //Authentication
     public _api_auth_login = this._baseAPIUrl + "login";
     
