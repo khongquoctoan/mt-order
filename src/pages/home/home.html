@@ -61,9 +61,9 @@
                 <h2>{{ item.name.formatted || item.name.givenName || item.displayName }}</h2>
                 <p *ngIf="!item.phoneNumbers.length">Empty mobile</p>
                 <p *ngIf="!item.phoneNumbers.length > 0">
-                    <p *ngFor="let phone of item.phoneNumbers">
+                    <small *ngFor="let phone of item.phoneNumbers">
                         M: {{ phone.value || '-' }}
-                    </p>
+                    </small>
                 </p>
                 <p>E: {{ item.emails[0]['value'] || '-'}}</p>
             </ion-item>
