@@ -5,12 +5,15 @@
             <ion-icon name="menu"></ion-icon>
             </button>
         </ion-buttons>
-        <ion-segment [(ngModel)]="productGroup">
+        <ion-segment [(ngModel)]="productGroup" (ionChange)="onSegmentChanged($event)">
             <ion-segment-button value="newest">
                 Mới nhất
             </ion-segment-button>
             <ion-segment-button value="bestseller">
                 Bán chạy
+            </ion-segment-button>
+            <ion-segment-button value="contactlist">
+                Danh bạ
             </ion-segment-button>
         </ion-segment>
         <ion-buttons end>
@@ -47,6 +50,17 @@
                 <p>{{item.pro_code}}
                     <small style="float:right">{{item.pro_price | currencyVnd}} VND</small>
                 </p>
+            </ion-item>
+        </ion-list>
+
+        <ion-list *ngSwitchCase="'contactlist'">
+            <ion-item class="center" *ngIf="loading.contactlist">
+                <ion-spinner name="bubbles"></ion-spinner>
+            </ion-item>
+            <ion-item *ngFor="let item of dataHome.contactlist">
+                <h2>{{item.displayName || item.name}}</h2>
+                <p>M: {{item.phoneNumbers}}</p>
+                <p>M: {{item.emails}}</p>
             </ion-item>
         </ion-list>
     </div>

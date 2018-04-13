@@ -13,6 +13,8 @@ export class HomePage {
     items: Array<{ title: string, img: string }>;
     dataHome: any = { 'newest': [] };
     loading: any = { 'newest': false, 'bestseller': false };
+    allContacts: any = {};
+
     constructor(
         public _navCtrl: NavController,
         public _actionSheetCtrl: ActionSheetController,
@@ -55,6 +57,19 @@ export class HomePage {
         );
     }
 
+    onSegmentChanged($event) {
+        // console.log($event);
+        if ($event.value == 'contactlist') {
+            if (typeof this.dataHome['contactlist'] == 'undefined')
+                this.dataHome['contactlist'] = [];
+
+            if (this.dataHome['contactlist'].length <= 0 && this.loading.contactlist != true) {
+                this.getContactList();
+            }
+
+        }
+    }
+
     presentActionSheet() {
         let actionSheet = this._actionSheetCtrl.create({
             title: 'Demo actions',
@@ -63,6 +78,12 @@ export class HomePage {
                     text: 'Add contact',
                     handler: () => {
                         this.addContact();
+                    }
+                },
+                {
+                    text: 'Lấy danh bạ',
+                    handler: () => {
+                        this.getContactList();
                     }
                 },
                 {
@@ -93,6 +114,21 @@ export class HomePage {
             () => this._dataService.showAlert('Contact saved!', contact),
             (error: any) => this._dataService.showAlert('Error saving contact!', error)
         );
+    }
+
+    getContactList() {
+        this.loading.contactlist = true;
+        this._contacts.find(
+            ['displayName', 'name', 'phoneNumbers', 'emails'],
+            { filter: "", multiple: true })
+            .then(data => {
+                this.loading.contactlist = false;
+                this.dataHome['contactlist'] = data;
+            },
+            (error: any) => {
+                this.loading.contactlist = false;
+                this._dataService.showAlert('Get list contact!', error)
+            });
     }
 
     showNotification() {
