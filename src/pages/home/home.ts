@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 import { DataService } from '../../services/data.service';
 
 @Component({
@@ -10,9 +11,11 @@ import { DataService } from '../../services/data.service';
 export class HomePage {
     productGroup: string = 'newest';
     items: Array<{ title: string, img: string }>;
-    dataHome:any = { 'newest' : [] };
+    dataHome: any = { 'newest': [] };
+    loading: any = { 'newest': false, 'bestseller': false };
     constructor(
         public _navCtrl: NavController,
+        private _localNotifications: LocalNotifications,
         private _contacts: Contacts,
         private _dataService: DataService
     ) {
@@ -27,14 +30,15 @@ export class HomePage {
     }
 
     loadListProduct() {
+        this.loading.newest = true;
         this._dataService.post('product/newest', {}).subscribe(
             res => {
-                console.log('Response: ', res);
+                // console.log('Response: ', res);
                 if (res.status == 'success') {
                     this.dataHome['newest'] = res.data;
                 }
-
-                console.log(this.dataHome['newest']);
+                this.loading.newest = false;
+                // console.log(this.dataHome['newest']);
             },
             err => {
                 console.log('err: ', err);
@@ -51,6 +55,16 @@ export class HomePage {
             () => console.log('Contact saved!', contact),
             (error: any) => console.error('Error saving contact.', error)
         );
+    }
+
+    showNotification() {
+        let infoNotify: any = {
+            id: '0',
+            title: 'Example',
+            text: 'Đây là ví dụ về thông báo mới1',
+            sound: null
+        };
+        this._localNotifications.schedule(infoNotify);
     }
 
 }

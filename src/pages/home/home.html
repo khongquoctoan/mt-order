@@ -1,15 +1,10 @@
 <ion-header>
-    <ion-navbar>
-        <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-        <ion-title>Home</ion-title>
-    </ion-navbar>
-</ion-header>
-
-<ion-content padding>
-    <!-- <button ion-button class="submit-btn" block (click)="addContact()">Add contact</button> -->
-    <div padding>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+            </button>
+        </ion-buttons>
         <ion-segment [(ngModel)]="productGroup">
             <ion-segment-button value="newest">
                 Mới nhất
@@ -18,9 +13,19 @@
                 Bán chạy
             </ion-segment-button>
         </ion-segment>
-    </div>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="showNotification()">
+                <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
 
+<ion-content padding>
     <div [ngSwitch]="productGroup">
+        <ion-item class="center" *ngIf="loading.bestseller">
+            <ion-spinner name="bubbles"></ion-spinner>
+        </ion-item>
         <ion-list *ngSwitchCase="'bestseller'">
             <ion-item *ngFor="let item of items">
                 <ion-thumbnail item-start>
@@ -28,10 +33,12 @@
                 </ion-thumbnail>
                 <h2>{{item.title}}</h2>
             </ion-item>
-
         </ion-list>
 
         <ion-list *ngSwitchCase="'newest'">
+            <ion-item class="center" *ngIf="loading.newest">
+                <ion-spinner name="bubbles"></ion-spinner>
+            </ion-item>
             <ion-item *ngFor="let item of dataHome.newest">
                 <ion-thumbnail item-start>
                     <img src="assets/imgs/{{item.pro_pictures}}" (error)="item.pro_pictures='img_1.jpg'">

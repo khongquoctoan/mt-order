@@ -1,3 +1,4 @@
+import { LocalNotifications } from '@ionic-native/local-notifications';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -45,6 +46,7 @@ import { CurrencyVndPipe } from '../pipes/currency-vnd.pipe';
         StatusBar,
         SplashScreen,
         Contacts,
+        LocalNotifications,
         SettingService,
         PermissionService,
         DataService,
