@@ -59,10 +59,9 @@ export class HomePage {
 
     showNotification() {
         let infoNotify: any = {
-            id: '0',
             title: 'Example',
             text: 'Đây là ví dụ về thông báo mới1',
-            sound: null
+            data: { 'id': 'value' }
         };
         this._localNotifications.schedule(infoNotify);
     }
