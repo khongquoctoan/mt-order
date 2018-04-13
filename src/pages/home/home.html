@@ -58,9 +58,9 @@
                 <ion-spinner name="bubbles"></ion-spinner>
             </ion-item>
             <ion-item *ngFor="let item of dataHome.contactlist">
-                <h2>{{ item.displayName || item.name }}</h2>
-                <p>M: {{ item.phoneNumbers }}</p>
-                <p>E: {{ item.emails }}</p>
+                <h2>{{ item.displayName || item.name.formatted || item.name.givenName }}</h2>
+                <p>M: {{ item.phoneNumbers[0]['value'] || '-' }}</p>
+                <p>E: {{ item.emails[0]['value'] || '-'}}</p>
             </ion-item>
         </ion-list>
     </div>
