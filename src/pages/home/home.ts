@@ -29,6 +29,14 @@ export class HomePage {
         this.loadListProduct();
     }
 
+    ionViewDidLoad() {
+        this._localNotifications.schedule({
+            id: 1,
+            text: 'Single ILocalNotification',
+            data: 'test'
+        });
+    }
+
     loadListProduct() {
         this.loading.newest = true;
         this._dataService.post('product/newest', {}).subscribe(
