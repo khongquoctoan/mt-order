@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ActionSheetController } from 'ionic-angular';
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { DataService } from '../../services/data.service';
@@ -15,6 +15,7 @@ export class HomePage {
     loading: any = { 'newest': false, 'bestseller': false };
     constructor(
         public _navCtrl: NavController,
+        public _actionSheetCtrl: ActionSheetController,
         private _localNotifications: LocalNotifications,
         private _contacts: Contacts,
         private _dataService: DataService
@@ -30,11 +31,11 @@ export class HomePage {
     }
 
     ionViewDidLoad() {
-        this._localNotifications.schedule({
-            id: 1,
-            text: 'Single ILocalNotification',
-            data: 'test'
-        });
+        // this._localNotifications.schedule({
+        //     id: 1,
+        //     text: 'Single ILocalNotification',
+        //     data: 'test'
+        // });
     }
 
     loadListProduct() {
@@ -54,14 +55,43 @@ export class HomePage {
         );
     }
 
+    presentActionSheet() {
+        let actionSheet = this._actionSheetCtrl.create({
+            title: 'Demo actions',
+            buttons: [
+                {
+                    text: 'Add contact',
+                    handler: () => {
+                        this.addContact();
+                    }
+                },
+                {
+                    text: 'Hiển thị Notify',
+                    handler: () => {
+                        this.showNotification();
+                    }
+                },
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                        console.log('Cancel clicked');
+                    }
+                }
+            ]
+        });
+
+        actionSheet.present();
+    }
+
     addContact() {
         let contact: Contact = this._contacts.create();
-
+        // console.log('contact: ', contact);
         contact.name = new ContactName(null, 'Smith', 'John');
         contact.phoneNumbers = [new ContactField('mobile', '6471234567')];
         contact.save().then(
-            () => console.log('Contact saved!', contact),
-            (error: any) => console.error('Error saving contact.', error)
+            () => this._dataService.showAlert('Contact saved!', contact),
+            (error: any) => this._dataService.showAlert('Error saving contact!', error)
         );
     }
 
