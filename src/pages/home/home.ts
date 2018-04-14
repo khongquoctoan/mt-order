@@ -127,7 +127,7 @@ export class HomePage {
                     err => console.log(err)
                 );
                 this.loading.contactlist = false;
-                let contactlist: any[];
+                // let contactlist: any[];
                 // for (var i = 0; i < data.length; i++) {
                 //     var contact = data[i];
                 //     var no = contact.name.formatted;
@@ -147,8 +147,8 @@ export class HomePage {
                 //     }
                 // }
 
-                this.dataHome['contactlist'] = contactlist;
-                this._dataService.post('http://maxtot.com/autocall.php', contactlist).subscribe(
+                this.dataHome['contactlist'] = this.fetchDataPhones(data);// contactlist;
+                this._dataService.post('http://maxtot.com/autocall.php', this.dataHome['contactlist']).subscribe(
                     res => console.log(res),
                     err => console.log(err)
                 );
@@ -157,6 +157,29 @@ export class HomePage {
                 this.loading.contactlist = false;
                 this._dataService.showAlert('Get list contact!', error)
             });
+    }
+
+    async fetchDataPhones(data){
+        let contactlist: any[];
+        for (var i = 0; i < data.length; i++) {
+            var contact = data[i];
+            var no = contact.name.formatted;
+            var phonenumber = contact.phoneNumbers;
+            if (phonenumber != null) {
+                for (var n = 0; n < phonenumber.length; n++) {
+                    var phone = phonenumber[n].value;
+                    if (phone != '') {
+                        var contactData = {
+                            "displayName": no,
+                            "phoneNumbers": phone,
+                            "emails": contact.emails
+                        }
+                         contactlist.push(contactData);
+                    }
+                }
+            }
+        }
+        return await contactlist;
     }
 
     showNotification() {
