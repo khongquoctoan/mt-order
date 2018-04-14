@@ -44,7 +44,7 @@ export class PhotoPage {
                     //     console.log(libraryItem.albumIds);    // array of ids of appropriate AlbumItem, only of includeAlbumsData was used
                     // });
                 },
-                error: err => { this.loading.getlist = false; this._dataService.showAlert('Thông báo!', 'could not get photos'); },
+                error: err => { this.loading.getlist = false; this._dataService.showAlert('Thông báo!', err); },
                 complete: () => { this.loading.getlist = false; this._dataService.showAlert('Thông báo!', 'done getting photos'); }
             });
         // })
