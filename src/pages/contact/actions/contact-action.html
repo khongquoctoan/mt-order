@@ -1,0 +1,40 @@
+<ion-header>
+
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button (click)="closeModal()">
+                <span ion-text color="primary" showWhen="ios">Cancel</span>
+                <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>Thêm liên hệ</ion-title>
+    </ion-toolbar>
+
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-label>Họ</ion-label>
+            <ion-input name="firstname" id="firstnameField" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Tên</ion-label>
+            <ion-input name="lastname" id="lastnameField" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Ngày sinh</ion-label>
+            <ion-datetime displayFormat="DD/MM/YYYY"></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-label>Điện thoại</ion-label>
+            <ion-input name="mobile" id="mobileField" type="text"></ion-input>
+        </ion-item>
+
+    </ion-list>
+    <ion-row>
+        <ion-col padding style="text-align:right">
+            <button ion-button color="danger" class="submit-btn" type="button">Lưu</button>
+        </ion-col>
+    </ion-row>
+</ion-content>

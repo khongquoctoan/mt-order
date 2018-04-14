@@ -19,7 +19,7 @@ export class LoginPage {
         public _events: Events,
         private _storage: Storage,
         private _dataService: DataService) {
-        this.username = 'admin@maxtot.com';
+        this.username = 'quoctoan@gmail.com';
         this.password = 'secret';
     }
 

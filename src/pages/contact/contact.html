@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>Contacts</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="presentActionSheet()">
+              <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-item class="center" *ngIf="loading.contactlist">
+            <ion-spinner name="bubbles"></ion-spinner>
+        </ion-item>
+        <ion-item *ngFor="let item of contactList">
+            <h2>{{ item.displayName || 'Empty' }}</h2>
+            <p>M: {{ item.phoneNumbers || '-' }} <i *ngIf="item.phoneNumbers!=''" style="float:right;" (click)="callNumber(item.phoneNumbers)">Call</i></p>
+            <p>E: {{ item.emails || '-'}}</p>
+        </ion-item>
+    </ion-list>
+</ion-content>
