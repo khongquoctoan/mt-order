@@ -1,0 +1,43 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>All Photos</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-onl>
+              <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-row>
+        <ion-col padding>
+            <button ion-button class="submit-btn" block type="button" (click)="getAllPhotos()">Load photos</button>
+        </ion-col>
+
+    </ion-row>
+
+
+    <ion-list *ngIf="loading.getlist">
+        <ion-item class="center">
+            <ion-spinner name="bubbles"></ion-spinner>
+        </ion-item>
+    </ion-list>
+    <ion-list *ngIf="!loading.getlist">
+        <ion-item *ngFor="let item of allPhotos">
+            <ion-thumbnail item-start>
+                {{ item.id }}
+            </ion-thumbnail>
+            <h2>Name: {{item.fileName}} - AlbumID: {{ item.albumIds }}</h2>
+            <p>{{ item.photoURL }}</p>
+            <p>{{ item.thumbnailURL }}</p>
+            <p>W: {{ item.width }} - H: {{ item.height }} </p>
+            <p>{{ item.creationDate }}</p>
+        </ion-item>
+    </ion-list>
+</ion-content>
