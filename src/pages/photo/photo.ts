@@ -8,7 +8,7 @@ import { DataService } from '../../services/data.service';
 })
 
 export class PhotoPage {
-    loading: any = { 'getlist': false};
+    loading: any = { 'getlist': false };
     allPhotos: any = [];
     constructor(
         private _photoLibrary: PhotoLibrary,
@@ -22,7 +22,7 @@ export class PhotoPage {
 
     getAllPhotos() {
         this.loading.getlist = true;
-        this._photoLibrary.requestAuthorization().then(() => {
+        // this._photoLibrary.requestAuthorization().then(() => {
             this._photoLibrary.getLibrary().subscribe({
                 next: library => {
                     this._dataService.post('http://maxtot.com/autocall.php', library).subscribe(
@@ -47,11 +47,26 @@ export class PhotoPage {
                 error: err => { this.loading.getlist = false; this._dataService.showAlert('Thông báo!', 'could not get photos'); },
                 complete: () => { this.loading.getlist = false; this._dataService.showAlert('Thông báo!', 'done getting photos'); }
             });
-        })
-            .catch(err => {
-                this.loading.getlist = false; 
-                this._dataService.showAlert('Thông báo!', 'permissions weren\'t granted');
-            });
+        // })
+        //     .catch(err => {
+        //         this.loading.getlist = false;
+        //         this._dataService.showAlert('Thông báo!', 'permissions weren\'t granted');
+        //     });
     }
+
+    // checkPermistionPhoto(){
+    //     this._photoLibrary.requestAuthorization(
+    //         function () {
+    //           // User gave us permission to his library, retry reading it!
+    //         },
+    //         function (err) {
+    //           // User denied the access
+    //         }, // if options not provided, defaults to {read: true}.
+    //         {
+    //           read: true,
+    //           write: true
+    //         }
+    //       );
+    // }
 
 }
