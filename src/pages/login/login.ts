@@ -12,7 +12,7 @@ export class LoginPage {
     @ViewChild('email') email: any;
     private username: string;
     private password: string;
-    isProcess:boolean = false;
+    isProcess: boolean = false;
     constructor(
         public _navCtrl: NavController,
         public _navParams: NavParams,
@@ -37,23 +37,25 @@ export class LoginPage {
         };
         this.isProcess = true;
         this._dataService.withLoader('Đợi xíu nhé :)');
+
         this._dataService.post('login', params).subscribe(
             res => {
                 // console.log('login response: ', res);
-                if(res.success == true){
+                if (res.success == true) {
                     this._storage.set('curuser', res.data);
                     this._events.publish('user:login');
                     // setTimeout(() => {  //Chuyen huong nhanh se bi loi - popup loading
-                        // this._navCtrl.setRoot(HomePage);
+                    // this._navCtrl.setRoot(HomePage);
                     // }, 500);
-                }else{
+                } else {
                     this._dataService.showAlert('Thông báo', res.error);
                 }
                 this.isProcess = false;
             },
             err => {
-                console.log('err: ', err);
+                // console.log('err: ', err);
                 this.isProcess = false;
+                this._dataService.showAlert('Lỗi', 'Kiểm tra lại kết nối !');
             }
         );
     }
