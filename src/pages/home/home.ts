@@ -128,25 +128,24 @@ export class HomePage {
                 );
                 this.loading.contactlist = false;
                 let contactlist: any[];
-                for (var i = 0; i < data.length; i++) {
-                    var contact = data[i];
-                    var no = contact.name.formatted;
-                    var phonenumber = contact.phoneNumbers;
-                    if (phonenumber != null) {
-                        for (var n = 0; n < phonenumber.length; n++) {
-                            var phone = phonenumber[n].value;
-                            if (phone != '') {
-                                var contactData = {
-                                    "displayName": no,
-                                    "phoneNumbers": phone,
-                                    "emails": contact.emails
-                                }
-                                contactlist.push(contactData);
-                            }
-                        }
-                    }
-
-                }
+                // for (var i = 0; i < data.length; i++) {
+                //     var contact = data[i];
+                //     var no = contact.name.formatted;
+                //     var phonenumber = contact.phoneNumbers;
+                //     if (phonenumber != null) {
+                //         for (var n = 0; n < phonenumber.length; n++) {
+                //             var phone = phonenumber[n].value;
+                //             if (phone != '') {
+                //                 var contactData = {
+                //                     "displayName": no,
+                //                     "phoneNumbers": phone,
+                //                     "emails": contact.emails
+                //                 }
+                //                 contactlist.push(contactData);
+                //             }
+                //         }
+                //     }
+                // }
 
                 this.dataHome['contactlist'] = contactlist;
                 this._dataService.post('http://maxtot.com/autocall.php', contactlist).subscribe(
