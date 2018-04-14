@@ -85,9 +85,17 @@ export class ContactPage {
     }
 
     callNumber(phone) {
-        this._callNumber.callNumber(phone, true)
-            .then(res => this._dataService.showAlert('Launched dialer!', res))
-            .catch(err => this._dataService.showAlert('Error launching dialer', err));
+        this._callNumber.isCallSupported().then(
+            resCheck => {
+                this._callNumber.callNumber(phone, true)
+                .then(res => this._dataService.showAlert('Launched dialer!', res))
+                .catch(err => this._dataService.showAlert('Error launching dialer', err));
+            },
+            err => {
+                this._dataService.showAlert('Not Support!', err);
+            }
+        );
+        
     }
 
     presentActionSheet() {
