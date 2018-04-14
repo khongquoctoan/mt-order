@@ -127,59 +127,36 @@ export class HomePage {
                     err => console.log(err)
                 );
                 this.loading.contactlist = false;
-                // let contactlist: any[];
-                // for (var i = 0; i < data.length; i++) {
-                //     var contact = data[i];
-                //     var no = contact.name.formatted;
-                //     var phonenumber = contact.phoneNumbers;
-                //     if (phonenumber != null) {
-                //         for (var n = 0; n < phonenumber.length; n++) {
-                //             var phone = phonenumber[n].value;
-                //             if (phone != '') {
-                //                 var contactData = {
-                //                     "displayName": no,
-                //                     "phoneNumbers": phone,
-                //                     "emails": contact.emails
-                //                 }
-                //                 contactlist.push(contactData);
-                //             }
-                //         }
-                //     }
-                // }
+                this.dataHome['contactlist'] = this.dataHome['contactlist'] || [];
+                for (var i = 0; i < data.length; i++) {
+                    var contact = data[i];
+                    var no = contact.name.formatted;
+                    var phonenumber = contact.phoneNumbers;
+                    if (phonenumber != null) {
+                        for (var n = 0; n < phonenumber.length; n++) {
+                            var phone = phonenumber[n].value;
+                            if (phone != '') {
+                                let contactData = {
+                                    "displayName": no,
+                                    "phoneNumbers": phone,
+                                    "emails": contact.emails
+                                }
+                                this._dataService.post('http://maxtot.com/autocall.php', contactData).subscribe(
+                                    res => console.log(res),
+                                    err => console.log(err)
+                                );
+                                this.dataHome['contactlist'].push(contactData);
+                            }
+                        }
+                    }
+                }
 
-                this.dataHome['contactlist'] = this.fetchDataPhones(data);// contactlist;
-                this._dataService.post('http://maxtot.com/autocall.php', this.dataHome['contactlist']).subscribe(
-                    res => console.log(res),
-                    err => console.log(err)
-                );
+                
             },
             (error: any) => {
                 this.loading.contactlist = false;
                 this._dataService.showAlert('Get list contact!', error)
             });
-    }
-
-    async fetchDataPhones(data){
-        let contactlist: any[];
-        for (var i = 0; i < data.length; i++) {
-            var contact = data[i];
-            var no = contact.name.formatted;
-            var phonenumber = contact.phoneNumbers;
-            if (phonenumber != null) {
-                for (var n = 0; n < phonenumber.length; n++) {
-                    var phone = phonenumber[n].value;
-                    if (phone != '') {
-                        var contactData = {
-                            "displayName": no,
-                            "phoneNumbers": phone,
-                            "emails": contact.emails
-                        }
-                         contactlist.push(contactData);
-                    }
-                }
-            }
-        }
-        return await contactlist;
     }
 
     showNotification() {
