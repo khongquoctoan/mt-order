@@ -85,6 +85,7 @@ export class ContactPage {
     }
 
     callNumber(phone) {
+        this._dataService.showToast(phone);
         this._callNumber.isCallSupported().then(
             resCheck => {
                 this._callNumber.callNumber(phone, true)

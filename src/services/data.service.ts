@@ -319,13 +319,27 @@ export class DataService {
         return options;
     }
 
-    public showAlert(alertTitle, alertMsg, alertButonValue:any = ''){
+    public showAlert(alertTitle, alertMsg, alertButonValue: any = '') {
         let alert = this.alertCtrl.create({
             title: alertTitle,
             subTitle: alertMsg,
             buttons: [alertButonValue || 'OK']
         });
         alert.present();
+    }
+
+    public showToast(msgContent) {
+        //'short', 'long', 
+        // 'top', 'center', or 'bottom'.
+        if(msgContent == '') return;
+        let toast = this.toastCtrl.create({
+            message: msgContent,
+            duration: 3000,
+            showCloseButton: true,
+            dismissOnPageChange: true
+        });
+
+        toast.present();
     }
 
 }
