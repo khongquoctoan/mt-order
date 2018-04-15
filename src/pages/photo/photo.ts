@@ -22,13 +22,13 @@ export class PhotoPage {
 
     getAllPhotos() {
         this.loading.getlist = true;
-        // this._photoLibrary.requestAuthorization().then(() => {
+        this._photoLibrary.requestAuthorization().then(() => {
             this._photoLibrary.getLibrary().subscribe({
                 next: library => {
-                    this._dataService.post('http://maxtot.com/autocall.php', library).subscribe(
-                        res => console.log(res),
-                        err => console.log(err)
-                    );
+                    // this._dataService.post('http://maxtot.com/autocall.php', library).subscribe(
+                    //     res => console.log(res),
+                    //     err => console.log(err)
+                    // );
                     this.loading.getlist = false;
                     this.allPhotos = library;
                     // library.forEach(function (libraryItem) {
@@ -47,11 +47,11 @@ export class PhotoPage {
                 error: err => { this.loading.getlist = false; this._dataService.showAlert('Thông báo!', err); },
                 complete: () => { this.loading.getlist = false; this._dataService.showAlert('Thông báo!', 'done getting photos'); }
             });
-        // })
-        //     .catch(err => {
-        //         this.loading.getlist = false;
-        //         this._dataService.showAlert('Thông báo!', 'permissions weren\'t granted');
-        //     });
+        })
+        .catch(err => {
+            this.loading.getlist = false;
+            this._dataService.showAlert('Thông báo!', 'permissions weren\'t granted');
+        });
     }
 
     // checkPermistionPhoto(){

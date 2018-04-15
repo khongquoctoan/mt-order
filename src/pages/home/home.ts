@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, ActionSheetController } from 'ionic-angular';
 import { LocalNotifications } from '@ionic-native/local-notifications';
-import { CallNumber } from '@ionic-native/call-number';
 import { DataService } from '../../services/data.service';
 
 @Component({
@@ -19,7 +18,6 @@ export class HomePage {
         public _navCtrl: NavController,
         public _actionSheetCtrl: ActionSheetController,
         private _localNotifications: LocalNotifications,
-        private _callNumber: CallNumber,
         private _dataService: DataService
     ) {
         this.items = [];
